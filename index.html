@@ -118,31 +118,78 @@
         .card h3 { color: var(--sweden-blue); }
 
         /* FOUNDER SECTION */
-        .founder {
-            background-color: var(--light-grey);
-            padding: 80px 50px;
+            /* --- FOUNDER SECTION --- */
+        .profile-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 80px auto;
+            gap: 60px;
+            padding: 20px;
         }
-        .founder-text {
-            max-width: 500px;
+        
+        .profile-img-col {
+            flex: 1;
+            text-align: center;
+            position: relative; /* önemli */
         }
-        .founder-img {
-            width: 200px;
-            height: 200px;
-            background-color: #ddd; /* FOTOĞRAFIN BURAYA GELECEK */
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        
+        .profile-text-col {
+            flex: 2;
         }
+        
+        /* FOTO */
+        .founder-photo {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        
+        /* COAT OF ARMS (KÖŞEDE LOGO) */
         .coat-of-arms {
-            width: 80px;
-            margin-top: 20px;
-            opacity: 0.8;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 70px;
+            opacity: 0.9;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.8);
+            padding: 3px;
+        }
+        
+        /* ALT YAZI */
+        .heraldry-caption {
+            font-size: 11px;
+            color: #777;
+            margin-top: 15px;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        /* BAŞLIK */
+        h1 {
+            color: var(--sweden-blue);
+            margin-top: 0;
+        }
+        
+        /* ALT BAŞLIK */
+        .title {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        /* FOOTER */
+        footer {
+            background-color: #222;
+            color: #aaa;
+            padding: 40px 50px;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 50px;
         }
 
         /* DOCUMENTS SECTION */
@@ -243,30 +290,33 @@
     </section>
 
     <!-- FOUNDER SECTION -->
- <section class="founder">
-    <div class="founder-img">
+<section class="profile-container">
+
+    <div class="profile-img-col">
         <img src="src/img/dogukanyegin.JPEG" class="founder-photo" alt="Doğukan Yegin">
+
+        <!-- Coat of arms artık köşede -->
+        <img src="src/img/yegin-d-arms.jpg" class="coat-of-arms" alt="Coat of Arms">
     </div>
 
-    <div class="founder-text">
-        <h2>Meet the Founder</h2>
+    <div class="profile-text-col">
+        <h1>Meet the Founder</h1>
 
         <p>
             <strong>Doğukan Yegin</strong> is a technology entrepreneur and advocate for neurodiversity rights.
-            With a background in cybersecurity and game development, he brings a rational and solution-oriented
-            approach to social advocacy.
+            With a background in cybersecurity and game development, he brings a rational and
+            solution-oriented approach to social advocacy.
         </p>
 
         <p>
             <em>"Our goal is not to win elections, but to build a future for those who think differently."</em>
         </p>
 
-        <img src="src/img/yegin-d-arms.jpg" class="coat-of-arms" alt="Doğukan Yegin Coat of Arms">
-
-        <div style="margin-top: 20px; font-size: 12px; color: #666;">
+        <div class="heraldry-caption">
             Registered at The Armorial Register
         </div>
     </div>
+
 </section>
     <!-- DOCUMENTS SECTION -->
     <section class="documents">
