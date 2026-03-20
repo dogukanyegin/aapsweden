@@ -130,11 +130,10 @@
         }
         
         .profile-img-col {
-            flex: 1;
-            text-align: center;
-            position: relative; /* önemli */
-        }
-        
+            position: relative; /* BUNU EKLE (en kritik satır) */
+            display: inline-block;
+        }        
+
         .profile-text-col {
             flex: 2;
         }
@@ -152,11 +151,9 @@
             position: absolute;
             bottom: 10px;
             right: 10px;
-            width: 70px;
-            opacity: 0.9;
-            border-radius: 6px;
-            background: rgba(255,255,255,0.8);
-            padding: 3px;
+            width: 60px;
+            opacity: 0.95;
+            z-index: 2;
         }
         
         /* ALT YAZI */
