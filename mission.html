@@ -12,7 +12,6 @@
 
     <title>Mission - AAP Sweden</title>
     <style>
-        /* AYNI CSS STİLİ (TUTARLILIK İÇİN) */
         :root { --sweden-blue: #005293; --sweden-yellow: #FECB00; --dark-grey: #333; --light-grey: #f4f4f4; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: var(--dark-grey); line-height: 1.6; }
         header { background-color: white; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -27,6 +26,98 @@
         ul { list-style-type: none; padding: 0; }
         ul li { background: var(--light-grey); margin: 10px 0; padding: 15px; border-left: 5px solid var(--sweden-yellow); }
         
+        /* --- JANTE MANIFESTO SECTION --- */
+        .jante-section {
+            background-color: #f9f9f9;
+            border-top: 4px solid var(--sweden-yellow);
+            padding: 60px 0;
+        }
+        .jante-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+        .jante-inner h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        .jante-inner .section-intro {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Tab Controls */
+        .lang-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+            border-bottom: 2px solid var(--sweden-yellow);
+        }
+        .lang-tab {
+            padding: 10px 28px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            background: #e8e8e8;
+            color: #555;
+            border: none;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .lang-tab:hover { background: #d0d0d0; }
+        .lang-tab.active {
+            background: var(--sweden-blue);
+            color: white;
+        }
+
+        /* Tab Content */
+        .lang-panel { display: none; padding: 30px 0 10px 0; }
+        .lang-panel.active { display: block; }
+
+        .manifesto-block h3 {
+            color: var(--sweden-blue);
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 8px;
+        }
+        .manifesto-block h4 {
+            color: #444;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 6px;
+        }
+        .manifesto-block p {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+        .oath-box {
+            background: var(--sweden-blue);
+            color: white;
+            border-left: 5px solid var(--sweden-yellow);
+            padding: 20px 25px;
+            border-radius: 4px;
+            margin: 25px 0;
+            font-style: italic;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        .flag-label {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--sweden-blue);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         footer { background-color: #222; color: #aaa; padding: 40px 50px; font-size: 12px; text-align: center; margin-top: 50px;}
 
         /* --- MOBİL UYUMLULUK --- */
@@ -37,7 +128,9 @@
             nav a.btn { margin-top: 10px; display: inline-block; }
             .page-header { padding: 40px 20px; }
             .content-section { padding: 30px 20px; }
+            .jante-inner { padding: 0 20px; }
             footer { padding: 30px 20px; }
+            .lang-tab { padding: 10px 16px; font-size: 13px; }
         }
     </style>
 </head>
@@ -73,13 +166,72 @@
         </ul>
     </section>
 
+    <!-- JANTE MANIFESTO SECTION -->
+    <section class="jante-section">
+        <div class="jante-inner">
+            <h2>Jante's Inclusion</h2>
+            <p class="section-intro">A New Perspective for the Disadvantaged — authored in the spirit of Nordic consensus and mutual respect.</p>
+
+            <div class="lang-tabs">
+                <button class="lang-tab active" onclick="switchTab('no')">🇳🇴 Norsk</button>
+                <button class="lang-tab" onclick="switchTab('sv')">🇸🇪 Svenska</button>
+            </div>
+
+            <!-- NORWEGIAN PANEL -->
+            <div class="lang-panel active" id="panel-no">
+                <div class="manifesto-block">
+                    <div class="flag-label">🇳🇴 Norsk — Bokmål</div>
+                    <h3>Jantes Inkludering – Et Nytt Perspektiv for de Utsatte</h3>
+
+                    <h4>Kjernen i Janteloven: Likhet og Ydmykhet</h4>
+                    <p>Janteloven, som ligger i hjertet av den skandinaviske kulturen, er en svært verdifull kulturarv som sikrer likhet, fred og forhindrer arroganse i samfunnet. Hovedformålet med denne loven er å forhindre at individer undertrykker hverandre, og å sikre at alle kan se på livet fra samme nivå. For de som er født privilegerte og sterke, er dette en dyd som demper stolthet.</p>
+                    <p>Men for nevromangfoldige (autistiske) individer, eller de som starter livet med ulemper, er det å nå denne likestillingslinjen ikke en naturlig prosess. Å prøve å tilpasse seg de standardene samfunnet anser som "normale", fører ofte til at disse individene mister sitt eget potensial og sin egen stemme. Målet for utsatte grupper er ikke å ødelegge Jante eller gjøre opprør mot flokken; tvert imot er det å bygge autonome systemer (som AAP Sweden, Northbyte) der de kan stå på egne ben, for å kunne delta i samfunnet på en likestilt og verdig måte.</p>
+
+                    <h4>De Utsattes Troskapsløfte til Jante</h4>
+                    <p>Vi som er utsatte, må gjøre en ekstra innsats og bygge våre egne veier for å overvinne våre hindringer, bevise vår dyktighet og etablere vår autonomi. Men når denne innsatsen fører til suksess, og vi oppnår makt og autonomi, sverger vi å forbli dypt trofaste mot Jantelovens mest hellige og uforanderlige regel:</p>
+                    <div class="oath-box">
+                        "Uansett hvor stor vår suksess er, skal vi ikke tro at vi er bedre enn noen andre. Arroganse er den største svakhet."
+                    </div>
+                    <p>Vi kan utvikle våre egne prosjekter, bekjempe desinformasjon (FactShield) og bygge selskaper. Men grunnfilosofien til AAP Sweden og min visjon er denne: Vær hardtarbeidende og bestemt nok til å maksimere ditt eget potensial; men når du når toppen, forbli ydmyk nok til å se på hvert medlem av samfunnet med samme respekt, i øyehøyde. Dette er Jantes sanne ånd.</p>
+                </div>
+            </div>
+
+            <!-- SWEDISH PANEL -->
+            <div class="lang-panel" id="panel-sv">
+                <div class="manifesto-block">
+                    <div class="flag-label">🇸🇪 Svenska</div>
+                    <h3>Jantes Inkludering – Ett Nytt Perspektiv för de Utsatta</h3>
+
+                    <h4>Kärnan i Jantelagen: Jämlikhet och Ödmjukhet</h4>
+                    <p>Jantelagen, som ligger i hjärtat av den skandinaviska kulturen, är ett mycket värdefullt kulturarv som säkerställer jämlikhet, frid och förhindrar arrogans i samhället. Huvudsyftet med denna lag är att förhindra att individer förtrycker varandra och att säkerställa att alla kan se på livet från samma nivå. För dem som föds privilegierade och starka är detta en dygd som dämpar högmod.</p>
+                    <p>Men för neurodivergenta (autistiska) individer, eller de som börjar livet med nackdelar, är det ingen naturlig process att nå denna jämlikhetslinje. Att försöka anpassa sig till de standarder samhället anser vara "normala" leder ofta till att dessa individer förlorar sin egen potential och sin egen röst. Målet för utsatta grupper är inte att förstöra Jante eller göra uppror mot flocken; tvärtom är det att bygga autonoma system (som AAP Sweden, Northbyte) där de kan stå på egna ben, för att kunna delta i samhället på ett jämlikt och värdigt sätt.</p>
+
+                    <h4>De Utsattas Lojalitetslöfte till Jante</h4>
+                    <p>Vi som är utsatta måste göra en extra insats och bygga våra egna vägar för att övervinna våra hinder, bevisa vår kompetens och etablera vår autonomi. Men när denna insats leder till framgång, och vi uppnår makt och autonomi, svär vi att förbli djupt trogna Jantelagens mest heliga och oföränderliga regel:</p>
+                    <div class="oath-box">
+                        "Oavsett hur stor vår framgång är, skall vi inte tro att vi är förmer än någon annan. Arrogans är den största svagheten."
+                    </div>
+                    <p>Vi kan utveckla våra egna projekt, bekämpa desinformation (FactShield) och bygga företag. Men grundfilosofin för AAP Sweden och min vision är denna: Var hårt arbetande och beslutsam nog att maximera din egen potential; men när du når toppen, förbli ödmjuk nog att se på varje medlem av samhället med samma respekt, i ögonhöjd. Detta är Jantes sanna anda.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <footer>
         <p>&copy; 2026 Autism Awareness Party of Sweden. All Rights Reserved.</p>
-                <p>
-            This website is operated by a non-profit association (ideell förening) under Swedish law.
-        </p>
+        <p>This website is operated by a non-profit association (ideell förening) under Swedish law.</p>
         <p><strong>LEGAL DISCLAIMER:</strong> The Autism Awareness Party of Sweden is a non-electoral political advocacy organization operating as a non-profit association (ideell förening). The Party does not participate in elections.</p>
     </footer>
+
+    <script>
+        function switchTab(lang) {
+            document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.lang-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-' + lang).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
 
 </body>
 </html>
