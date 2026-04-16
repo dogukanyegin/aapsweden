@@ -140,53 +140,49 @@
     </footer>
 
     <!-- Supabase Client ve Etkinlikleri Çekme Scripti -->
+  <!-- events.html sayfanızın en altındaki JAVASCRIPT bölümü (BUNUNLA DEĞİŞTİRİN) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // Harf hatası düzeltilmiş DOĞRU adres
         const SUPABASE_URL = 'https://jiljagzlblneudrgybsd.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_x_QULUCUF0-8PMq9GAkRBQ_4DVB0B07';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function loadEvents() {
             const eventsContainer = document.getElementById('events-container');
             
-            // 'aapsverige' tablosundan verileri çek
             const { data, error } = await supabase
                 .from('aapsverige')
                 .select('*')
-                .order('date', { ascending: false }); // Etkinlikleri tarihe göre sırala
+                .order('date', { ascending: false });
 
             if (error) {
                 console.error('Error fetching events:', error);
+                eventsContainer.innerHTML = '<p>Etkinlikler yüklenirken bir hata oluştu.</p>';
                 return;
             }
 
-            // Statik örnekleri temizle
-            eventsContainer.innerHTML = '';
+            eventsContainer.innerHTML = ''; // Yükleniyor yazısını/statik verileri temizle
 
-            if (data.length === 0) {
-                eventsContainer.innerHTML = '<p>Currently, there are no scheduled events.</p>';
+            if (!data || data.length === 0) {
+                eventsContainer.innerHTML = '<p>Şu anda planlanmış bir etkinlik bulunmamaktadır.</p>';
+                return;
             }
 
-            // Her bir etkinlik için HTML oluştur
+            // Veritabanından gelen her etkinliği ekrana yazdır
             data.forEach(event => {
                 const eventElement = document.createElement('div');
                 eventElement.classList.add('event-item');
 
-                // image_url'nin bir dizi mi yoksa tek bir string mi olduğunu kontrol et
-                let imageUrl = '';
-                if (Array.isArray(event.image_url) && event.image_url.length > 0) {
-                    imageUrl = event.image_url[0]; // Dizinin ilk elemanını al
-                } else if (typeof event.image_url === 'string') {
-                    imageUrl = event.image_url; // Zaten string ise direkt kullan
-                } else {
-                    imageUrl = 'https://via.placeholder.com/300x200.png?text=No+Image'; // Varsayılan resim
-                }
+                // Resim yoksa varsayılan bir resim göster
+                let imageUrl = event.image_url ? event.image_url : 'https://via.placeholder.com/300x200.png?text=Gorsel+Yok';
 
                 eventElement.innerHTML = `
                     <img src="${imageUrl}" alt="${event.post_name}" class="event-image">
                     <div class="event-content">
                         <h3>${event.post_name}</h3>
-                        <p class="event-date">Date: ${new Date(event.date).toLocaleDateString()}</p>
+                        <p class="event-date">Tarih: ${new Date(event.date).toLocaleDateString('tr-TR')}</p>
                         <p class="event-description">${event.content}</p>
                     </div>
                 `;
@@ -194,9 +190,7 @@
             });
         }
 
-        // Sayfa yüklendiğinde etkinlikleri yükle
         document.addEventListener('DOMContentLoaded', loadEvents);
     </script>
-
 </body>
 </html>
