@@ -1,10 +1,12 @@
-<!-- admin.html dosyanızın en altındaki script bölümünü bununla değiştirin -->
-
+<!-- ESKİ KODU SİLİP BUNU YAPIŞTIRIN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     const SUPABASE_URL = 'https://jiljagziblneudrgybsd.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_x_QULUCUF0-8PMq9GAkRBQ_4DVB0B07';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // HATA BURADA DÜZELTİLDİ: Değişken adı 'supabaseClient' olarak değiştirildi.
+    // Global 'supabase' objesini kullanarak yeni bir istemci oluşturuyoruz.
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // DOM Elementleri
     const loginView = document.getElementById('login-view');
@@ -16,7 +18,7 @@
     const errorMessage = document.getElementById('error-message');
 
     // --- OTURUM KONTROLÜ ---
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
         if (session) {
             loginView.style.display = 'none';
             adminView.style.display = 'block';
@@ -33,7 +35,7 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
         if (error) {
             errorMessage.textContent = 'Giriş başarısız: ' + error.message;
@@ -44,7 +46,7 @@
 
     // --- ÇIKIŞ İŞLEMİ ---
     logoutButton.addEventListener('click', () => {
-        supabase.auth.signOut();
+        supabaseClient.auth.signOut();
     });
 
     // --- YENİ ETKİNLİK EKLEME (RLS ile GÜVENLİ) ---
@@ -57,8 +59,7 @@
             image_url: document.getElementById('image_url').value,
         };
 
-        // DEĞİŞİKLİK BURADA: Artık doğrudan veritabanına yazıyoruz.
-        const { error } = await supabase.from('aapsverige').insert(eventData);
+        const { error } = await supabaseClient.from('aapsverige').insert(eventData);
 
         if (error) {
             alert('Hata: Etkinlik eklenemedi. (Yetkiniz olmayabilir): ' + error.message);
@@ -71,7 +72,7 @@
 
     // --- MEVCUT ETKİNLİKLERİ GETİRME ---
     async function fetchEvents() {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('aapsverige')
             .select('*')
             .order('date', { ascending: false });
@@ -99,8 +100,7 @@
             const eventId = e.target.dataset.id;
             if (confirm('Bu etkinliği silmek istediğinizden emin misiniz?')) {
                 
-                // DEĞİŞİKLİK BURADA: Artık doğrudan veritabanından siliyoruz.
-                const { error } = await supabase.from('aapsverige').delete().match({ id: eventId });
+                const { error } = await supabaseClient.from('aapsverige').delete().match({ id: eventId });
 
                 if (error) {
                     alert('Hata: Etkinlik silinemedi. (Yetkiniz olmayabilir): ' + error.message);
