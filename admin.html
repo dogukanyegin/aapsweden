@@ -1,114 +1,199 @@
-<!-- ESKİ KODU SİLİP BUNU YAPIŞTIRIN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    const SUPABASE_URL = 'https://jiljagziblneudrgybsd.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_x_QULUCUF0-8PMq9GAkRBQ_4DVB0B07';
-    
-    // HATA BURADA DÜZELTİLDİ: Değişken adı 'supabaseClient' olarak değiştirildi.
-    // Global 'supabase' objesini kullanarak yeni bir istemci oluşturuyoruz.
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // DOM Elementleri
-    const loginView = document.getElementById('login-view');
-    const adminView = document.getElementById('admin-view');
-    const loginForm = document.getElementById('login-form');
-    const addEventForm = document.getElementById('add-event-form');
-    const logoutButton = document.getElementById('logout-button');
-    const eventsListContainer = document.getElementById('events-list-container');
-    const errorMessage = document.getElementById('error-message');
-
-    // --- OTURUM KONTROLÜ ---
-    supabaseClient.auth.onAuthStateChange((event, session) => {
-        if (session) {
-            loginView.style.display = 'none';
-            adminView.style.display = 'block';
-            fetchEvents();
-        } else {
-            loginView.style.display = 'block';
-            adminView.style.display = 'none';
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAP Sweden - Admin Paneli</title>
+    <style>
+        :root { --sweden-blue: #005293; --sweden-yellow: #FECB00; --dark-grey: #333; --light-grey: #f4f4f4; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; background-color: var(--light-grey); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 800px; margin: 20px; }
+        .card { background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1, h2 { color: var(--sweden-blue); text-align: center; border-bottom: 2px solid var(--sweden-yellow); padding-bottom: 10px; margin-top: 0; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
+        input[type="email"], input[type="password"], input[type="text"], input[type="date"], textarea {
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
         }
-    });
-
-    // --- GİRİŞ İŞLEMİ ---
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        button {
+            width: 100%; background-color: var(--sweden-blue); color: white; padding: 14px; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.2s;
+        }
+        button:hover { background-color: #003e6e; }
+        button.logout { background-color: #d9534f; margin-top: 20px; }
+        button.logout:hover { background-color: #c9302c; }
+        #login-view, #admin-view { display: none; }
+        #error-message { color: #d9534f; text-align: center; margin-top: 15px; }
         
-        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        /* Etkinlik Listesi */
+        .event-list-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border: 1px solid #eee; border-radius: 4px; margin-bottom: 10px; }
+        .event-list-item p { margin: 0; }
+        .event-list-item button { width: auto; background-color: #f0ad4e; padding: 8px 12px; font-size: 12px; }
+        .event-list-item button:hover { background-color: #ec971f; }
+    </style>
+</head>
+<body>
 
-        if (error) {
-            errorMessage.textContent = 'Giriş başarısız: ' + error.message;
-        } else {
-            errorMessage.textContent = '';
-        }
-    });
+    <div class="container">
+        <!-- GİRİŞ EKRANI -->
+        <div id="login-view" class="card">
+            <h1>Admin Paneli Giriş</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required value="dogukan.yegin@hotmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Parola</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Giriş Yap</button>
+                <p id="error-message"></p>
+            </form>
+        </div>
 
-    // --- ÇIKIŞ İŞLEMİ ---
-    logoutButton.addEventListener('click', () => {
-        supabaseClient.auth.signOut();
-    });
+        <!-- YÖNETİM PANELİ (Giriş yapınca görünür) -->
+        <div id="admin-view" class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Etkinlik Yönetimi</h2>
+                <button id="logout-button" class="logout" style="width: auto; padding: 10px 15px; margin: 0;">Çıkış Yap</button>
+            </div>
+            <hr style="margin: 20px 0;">
+            
+            <h3>Yeni Etkinlik Ekle</h3>
+            <form id="add-event-form">
+                <div class="form-group"><label for="post_name">Etkinlik Başlığı</label><input type="text" id="post_name" required></div>
+                <div class="form-group"><label for="content">İçerik</label><textarea id="content" rows="4" required></textarea></div>
+                <div class="form-group"><label for="date">Tarih</label><input type="date" id="date" required></div>
+                <div class="form-group"><label for="image_url">Görsel URL</label><input type="text" id="image_url" placeholder="https://site.com/gorsel.jpg" required></div>
+                <button type="submit">Etkinliği Ekle</button>
+            </form>
 
-    // --- YENİ ETKİNLİK EKLEME (RLS ile GÜVENLİ) ---
-    addEventForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const eventData = {
-            post_name: document.getElementById('post_name').value,
-            content: document.getElementById('content').value,
-            date: document.getElementById('date').value,
-            image_url: document.getElementById('image_url').value,
-        };
+            <hr style="margin: 30px 0;">
+            <h3>Mevcut Etkinlikler</h3>
+            <div id="events-list-container"></div>
+        </div>
+    </div>
 
-        const { error } = await supabaseClient.from('aapsverige').insert(eventData);
+    <!-- SUPABASE VE JAVASCRIPT KODLARI -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://jiljagziblneudrgybsd.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_x_QULUCUF0-8PMq9GAkRBQ_4DVB0B07';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        if (error) {
-            alert('Hata: Etkinlik eklenemedi. (Yetkiniz olmayabilir): ' + error.message);
-        } else {
-            alert('Etkinlik başarıyla eklendi!');
-            addEventForm.reset();
-            fetchEvents(); // Listeyi yenile
-        }
-    });
+        // DOM Elementleri
+        const loginView = document.getElementById('login-view');
+        const adminView = document.getElementById('admin-view');
+        const loginForm = document.getElementById('login-form');
+        const addEventForm = document.getElementById('add-event-form');
+        const logoutButton = document.getElementById('logout-button');
+        const eventsListContainer = document.getElementById('events-list-container');
+        const errorMessage = document.getElementById('error-message');
 
-    // --- MEVCUT ETKİNLİKLERİ GETİRME ---
-    async function fetchEvents() {
-        const { data, error } = await supabaseClient
-            .from('aapsverige')
-            .select('*')
-            .order('date', { ascending: false });
-
-        if (error) {
-            eventsListContainer.innerHTML = '<p>Etkinlikler yüklenemedi.</p>';
-            return;
-        }
-
-        eventsListContainer.innerHTML = ''; // Listeyi temizle
-        data.forEach(event => {
-            const item = document.createElement('div');
-            item.className = 'event-list-item';
-            item.innerHTML = `
-                <p><strong>${event.post_name}</strong> (${new Date(event.date).toLocaleDateString()})</p>
-                <button data-id="${event.id}">Sil</button>
-            `;
-            eventsListContainer.appendChild(item);
+        // --- OTURUM KONTROLÜ ---
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                if(loginView) loginView.style.display = 'none';
+                if(adminView) adminView.style.display = 'block';
+                fetchEvents();
+            } else {
+                if(loginView) loginView.style.display = 'block';
+                if(adminView) adminView.style.display = 'none';
+            }
         });
-    }
 
-    // --- ETKİNLİK SİLME (RLS ile GÜVENLİ) ---
-    eventsListContainer.addEventListener('click', async (e) => {
-        if (e.target.tagName === 'BUTTON' && e.target.dataset.id) {
-            const eventId = e.target.dataset.id;
-            if (confirm('Bu etkinliği silmek istediğinizden emin misiniz?')) {
+        // --- GİRİŞ İŞLEMİ ---
+        if(loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
                 
-                const { error } = await supabaseClient.from('aapsverige').delete().match({ id: eventId });
+                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
                 if (error) {
-                    alert('Hata: Etkinlik silinemedi. (Yetkiniz olmayabilir): ' + error.message);
+                    errorMessage.textContent = 'Giriş başarısız: Parola veya e-posta hatalı.';
                 } else {
-                    alert('Etkinlik başarıyla silindi.');
+                    errorMessage.textContent = '';
+                }
+            });
+        }
+
+        // --- ÇIKIŞ İŞLEMİ ---
+        if(logoutButton) {
+            logoutButton.addEventListener('click', () => {
+                supabaseClient.auth.signOut();
+            });
+        }
+
+        // --- YENİ ETKİNLİK EKLEME (RLS ile GÜVENLİ) ---
+        if(addEventForm) {
+            addEventForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const eventData = {
+                    post_name: document.getElementById('post_name').value,
+                    content: document.getElementById('content').value,
+                    date: document.getElementById('date').value,
+                    image_url: document.getElementById('image_url').value,
+                };
+
+                const { error } = await supabaseClient.from('aapsverige').insert(eventData);
+
+                if (error) {
+                    alert('Hata: Etkinlik eklenemedi. (Supabase RLS yetkiniz olmayabilir): ' + error.message);
+                } else {
+                    alert('Etkinlik başarıyla eklendi!');
+                    addEventForm.reset();
                     fetchEvents(); // Listeyi yenile
                 }
-            }
+            });
         }
-    });
-</script>
+
+        // --- MEVCUT ETKİNLİKLERİ GETİRME ---
+        async function fetchEvents() {
+            if(!eventsListContainer) return;
+
+            const { data, error } = await supabaseClient
+                .from('aapsverige')
+                .select('*')
+                .order('date', { ascending: false });
+
+            if (error) {
+                eventsListContainer.innerHTML = '<p>Etkinlikler yüklenemedi.</p>';
+                return;
+            }
+
+            eventsListContainer.innerHTML = ''; // Listeyi temizle
+            data.forEach(event => {
+                const item = document.createElement('div');
+                item.className = 'event-list-item';
+                item.innerHTML = `
+                    <p><strong>${event.post_name}</strong> (${new Date(event.date).toLocaleDateString()})</p>
+                    <button data-id="${event.id}">Sil</button>
+                `;
+                eventsListContainer.appendChild(item);
+            });
+        }
+
+        // --- ETKİNLİK SİLME (RLS ile GÜVENLİ) ---
+        if(eventsListContainer) {
+            eventsListContainer.addEventListener('click', async (e) => {
+                if (e.target.tagName === 'BUTTON' && e.target.dataset.id) {
+                    const eventId = e.target.dataset.id;
+                    if (confirm('Bu etkinliği silmek istediğinizden emin misiniz?')) {
+                        
+                        const { error } = await supabaseClient.from('aapsverige').delete().match({ id: eventId });
+
+                        if (error) {
+                            alert('Hata: Etkinlik silinemedi. (Supabase RLS yetkiniz olmayabilir): ' + error.message);
+                        } else {
+                            alert('Etkinlik başarıyla silindi.');
+                            fetchEvents(); // Listeyi yenile
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
