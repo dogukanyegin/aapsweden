@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equalerkilizm | Rasyonel Eşitlik ve Liyakat Felsefesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-color: #F8FAFC;
+    --text-main: #0F172A;
+    --text-muted: #475569;
+    --accent-dark: #1E293B;
+    --accent-gold: #D97706;
+    --surface: #FFFFFF;
+    --border: #E2E8F0;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s;
+  }
+
+  /* RTL Support for Arabic */
+  html[dir="rtl"] body {
+    font-family: 'Arial', sans-serif;
+  }
+
+  h1, h2, h3, .serif { font-family: 'Crimson Pro', Georgia, serif; }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+  /* Navbar & Language Switcher */
+  nav {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .lang-select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Header / Hero */
+  header {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--text-main);
+    color: var(--surface);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+  }
+  header h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: var(--accent-dark);
+  }
+  header p.lead {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* Section Styles */
+  section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  
+  .section-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: var(--accent-dark);
+    text-align: center;
+  }
+
+  /* Principles Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+  }
+  .card {
+    background: var(--surface);
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+  .card-num {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 12px;
+  }
+  .card h3 { font-size: 1.25rem; margin-bottom: 12px; }
+
+  /* Manifesto Box */
+  .manifesto-box {
+    background: var(--accent-dark);
+    color: var(--surface);
+    padding: 60px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .manifesto-box .section-title { color: var(--surface); margin-bottom: 15px; }
+  .manifesto-box .sub-text { color: #94A3B8; margin-bottom: 40px; font-size: 1.1rem; }
+  .manifesto-list {
+    list-style: none;
+    font-size: 1.15rem;
+    font-weight: 300;
+    padding: 0;
+  }
+  .manifesto-list li { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .manifesto-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  
+  /* Footer & Corporate Support */
+  footer {
+    text-align: center;
+    padding: 60px 0 40px;
+    background-color: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+  .footer-copyright {
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+  .footer-support {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding: 16px 24px;
+    background: var(--bg-color);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .manifesto-box { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <select class="lang-select" id="langSwitcher" onchange="changeLanguage(this.value)">
+      <option value="tr">Türkçe</option>
+      <option value="en">English</option>
+      <option value="no">Norsk</option>
+      <option value="sv">Svenska</option>
+      <option value="da">Dansk</option>
+      <option value="is">Íslenska</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="nl">Nederlands</option>
+      <option value="es">Español</option>
+      <option value="pt">Português</option>
+      <option value="ru">Русский</option>
+      <option value="ar">العربية</option>
+    </select>
+  </nav>
+
+  <header>
+    <div class="container">
+      <div class="badge" data-key="badge">Siyasal & Toplumsal Akım</div>
+      <h1>Equalerkilizm</h1>
+      <p class="lead" data-key="hero_desc">
+        Cinsiyet üstünlüğünü reddeden; kadın ve erkek başta olmak üzere tüm bireylerin hukuk önünde eşitliğini, fırsat eşitliğini, karşılıklı sorumluluğu ve bireysel özgürlüğü birlikte savunan yeni nesil siyasal ve toplumsal düşünce akımı.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container">
+        <h2 class="section-title" data-key="prin_title">Temel İlkeler</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="card-num">01</div>
+            <h3 data-key="p1_title">Hukuki Eşitlik</h3>
+          </div>
+          <div class="card">
+            <div class="card-num">02</div>
+            <h3 data-key="p2_title">Karşılıklı Sorumluluk</h3>
+          </div>
+          <div class="card">
+            <div class="card-num">03</div>
+            <h3 data-key="p3_title">Liyakat</h3>
+          </div>
+          <div class="card">
+            <div class="card-num">04</div>
+            <h3 data-key="p4_title">Fırsat Eşitliği</h3>
+          </div>
+          <div class="card">
+            <div class="card-num">05</div>
+            <h3 data-key="p5_title">Şiddete Karşı Evrensellik</h3>
+          </div>
+          <div class="card">
+            <div class="card-num">06</div>
+            <h3 data-key="p6_title">Aile ve Birey Dengesi</h3>
+          </div>
+          <div class="card">
+            <div class="card-num">07</div>
+            <h3 data-key="p7_title">Rasyonel Diyalog</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="manifesto-box">
+          <h2 class="section-title" data-key="man_title">Equalerkil Manifestosu</h2>
+          <p class="sub-text" data-key="man_sub">Çatışmayı değil iş birliğini, üstünlüğü değil dengeyi, ayrımcılığı değil eşitliği savun.</p>
+          <ul class="manifesto-list">
+            <li data-key="m1">İnsan, cinsiyetinden önce bireydir.</li>
+            <li data-key="m2">Haklar evrenseldir, sorumluluklar ortaktır.</li>
+            <li data-key="m3">Adalet ayrıcalık değil, eşit muameledir.</li>
+            <li data-key="m4">Hiçbir cinsiyet diğerinden üstün değildir.</li>
+            <li data-key="m5">Şiddet, ayrımcılık ve nefret kimden gelirse gelsin reddedilir.</li>
+            <li data-key="m6">Liyakat, dürüstlük ve özgürlük toplumsal gelişmenin temelidir.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p class="footer-copyright">&copy; 2026 Equalerkilizm. <span data-key="footer_slogan">Hukuk, Liyakat ve Birey.</span></p>
+      <p class="footer-support" data-key="support_text">Bu felsefi inisiyatif, dijital bağımsızlığı, veri egemenliğini ve rasyonel hukuku savunan NorthByte Norway Tec Ltd. (UK) ve AAP Sweden tarafından teknolojik olarak desteklenmektedir.</p>
+    </div>
+  </footer>
+
+<script>
+const translations = {
+  tr: {
+    badge: "Siyasal & Toplumsal Akım", hero_desc: "Cinsiyet üstünlüğünü reddeden; tüm bireylerin hukuk önünde eşitliğini, fırsat eşitliğini, karşılıklı sorumluluğu ve bireysel özgürlüğü birlikte savunan yeni nesil siyasal ve toplumsal düşünce akımı.", prin_title: "Temel İlkeler", p1_title: "Hukuki Eşitlik", p2_title: "Karşılıklı Sorumluluk", p3_title: "Liyakat", p4_title: "Fırsat Eşitliği", p5_title: "Şiddete Karşı Evrensellik", p6_title: "Aile ve Birey Dengesi", p7_title: "Rasyonel Diyalog", man_title: "Equalerkil Manifestosu", man_sub: "Çatışmayı değil iş birliğini, üstünlüğü değil dengeyi, ayrımcılığı değil eşitliği savun.", m1: "İnsan, cinsiyetinden önce bireydir.", m2: "Haklar evrenseldir, sorumluluklar ortaktır.", m3: "Adalet ayrıcalık değil, eşit muameledir.", m4: "Hiçbir cinsiyet diğerinden üstün değildir.", m5: "Şiddet, ayrımcılık ve nefret kimden gelirse gelsin reddedilir.", m6: "Liyakat, dürüstlük ve özgürlük toplumsal gelişmenin temelidir.", footer_slogan: "Hukuk, Liyakat ve Birey.", support_text: "Bu felsefi inisiyatif, dijital bağımsızlığı, veri egemenliğini ve rasyonel hukuku savunan NorthByte Norway Tec Ltd. (UK) ve AAP Sweden tarafından teknolojik olarak desteklenmektedir."
+  },
+  en: {
+    badge: "Political & Social Movement", hero_desc: "A new generation political and social movement that rejects gender supremacy; advocating legal equality, equal opportunity, mutual responsibility, and individual freedom for all.", prin_title: "Core Principles", p1_title: "Legal Equality", p2_title: "Mutual Responsibility", p3_title: "Meritocracy", p4_title: "Equal Opportunity", p5_title: "Universal Protection against Violence", p6_title: "Balance of Family and Individual", p7_title: "Rational Dialogue", man_title: "Equalerkil Manifesto", man_sub: "Advocate cooperation, not conflict; balance, not supremacy; equality, not discrimination.", m1: "A human is an individual before their gender.", m2: "Rights are universal, responsibilities are shared.", m3: "Justice is not a privilege, it is equal treatment.", m4: "No gender is superior to another.", m5: "Violence, discrimination, and hate are rejected regardless of the source.", m6: "Merit, honesty, and freedom are the foundation of social development.", footer_slogan: "Law, Merit, and the Individual.", support_text: "This philosophical initiative is technologically supported by NorthByte Norway Tec Ltd. (UK) and AAP Sweden, advocating for digital independence, data sovereignty, and rational law."
+  },
+  no: {
+    badge: "Politisk og sosial bevegelse", hero_desc: "En ny generasjons politisk og sosial bevegelse som avviser kjønnsoverlegenhet; forsvarer juridisk likhet, like muligheter, gjensidig ansvar og individuell frihet for alle.", prin_title: "Grunnprinsipper", p1_title: "Juridisk likhet", p2_title: "Gjensidig ansvar", p3_title: "Meritokrati", p4_title: "Like muligheter", p5_title: "Universell beskyttelse mot vold", p6_title: "Balanse mellom familie og individ", p7_title: "Rasjonell dialog", man_title: "Equalerkil Manifest", man_sub: "Forsvar samarbeid, ikke konflikt; balanse, ikke overlegenhet; likhet, ikke diskriminering.", m1: "Et menneske er et individ før sitt kjønn.", m2: "Rettigheter er universelle, ansvar er delt.", m3: "Rettferdighet er ikke et privilegium, det er likebehandling.", m4: "Ingen kjønn er overlegne et annet.", m5: "Vold, diskriminering og hat avvises uansett kilde.", m6: "Meritter, ærlighet og frihet er grunnlaget for sosial utvikling.", footer_slogan: "Lov, meritter og individet.", support_text: "Dette filosofiske initiativet er teknologisk støttet av NorthByte Norway Tec Ltd. (UK) og AAP Sweden, som forsvarer digital uavhengighet, datasuverenitet og rasjonell lov."
+  },
+  sv: {
+    badge: "Politisk och social rörelse", hero_desc: "En ny generations politiska och sociala rörelse som förkastar könsöverlägsenhet; förespråkar juridisk jämlikhet, lika möjligheter, ömsesidigt ansvar och individuell frihet för alla.", prin_title: "Grundprinciper", p1_title: "Juridisk jämlikhet", p2_title: "Ömsesidigt ansvar", p3_title: "Meritokrati", p4_title: "Lika möjligheter", p5_title: "Universellt skydd mot våld", p6_title: "Balans mellan familj och individ", p7_title: "Rationell dialog", man_title: "Equalerkil Manifest", man_sub: "Förespråka samarbete, inte konflikt; balans, inte överlägsenhet; jämlikhet, inte diskriminering.", m1: "En människa är en individ före sitt kön.", m2: "Rättigheter är universella, ansvar delas.", m3: "Rättvisa är inget privilegium, det är likabehandling.", m4: "Inget kön är överlägset ett annat.", m5: "Våld, diskriminering och hat förkastas oavsett källa.", m6: "Meriter, ärlighet och frihet är grunden för social utveckling.", footer_slogan: "Lag, meriter och individen.", support_text: "Detta filosofiska initiativ stöds tekniskt av NorthByte Norway Tec Ltd. (UK) och AAP Sweden, som förespråkar digitalt oberoende, datasuveränitet och rationell lag."
+  },
+  da: {
+    badge: "Politisk & Social Bevægelse", hero_desc: "En ny generations politisk og social bevægelse, der afviser kønsoverlegenhed; forsvarer juridisk lighed, lige muligheder, gensidigt ansvar og individuel frihed for alle.", prin_title: "Grundprincipper", p1_title: "Juridisk lighed", p2_title: "Gensidigt ansvar", p3_title: "Meritokrati", p4_title: "Lige muligheder", p5_title: "Universel beskyttelse mod vold", p6_title: "Balance mellem familie og individ", p7_title: "Rationel dialog", man_title: "Equalerkil Manifest", man_sub: "Forsvar samarbejde, ikke konflikt; balance, ikke overlegenhed; lighed, ikke diskrimination.", m1: "Et menneske er et individ før sit køn.", m2: "Rettigheder er universelle, ansvar er fælles.", m3: "Retfærdighed er ikke et privilegium, det er ligebehandling.", m4: "Intet køn er et andet overlegent.", m5: "Vold, diskrimination og had afvises uanset kilden.", m6: "Merit, ærlighed og frihed er fundamentet for social udvikling.", footer_slogan: "Lov, Merit og Individet.", support_text: "Dette filosofiske initiativ er teknologisk støttet af NorthByte Norway Tec Ltd. (UK) og AAP Sweden, som forsvarer digital uafhængighed, datasuverænitet og rationel lov."
+  },
+  is: {
+    badge: "Stjórnmála- og samfélagshreyfing", hero_desc: "Ný kynslóð stjórnmála- og samfélagshreyfingar sem hafnar yfirburðum kynjanna; berst fyrir lagalegu jafnrétti, jöfnum tækifærum, gagnkvæmri ábyrgð og einstaklingsfrelsi fyrir alla.", prin_title: "Meginreglur", p1_title: "Lagalegt jafnrétti", p2_title: "Gagnkvæm ábyrgð", p3_title: "Verðleikakerfi", p4_title: "Jöfn tækifæri", p5_title: "Almenn vernd gegn ofbeldi", p6_title: "Jafnvægi fjölskyldu og einstaklings", p7_title: "Rökrétt samtal", man_title: "Equalerkil Stefnumótun", man_sub: "Hvetjum til samvinnu, ekki átaka; jafnvægis, ekki yfirburða; jafnréttis, ekki mismununar.", m1: "Maðurinn er einstaklingur áður en hann er kyn.", m2: "Réttindi eru algild, ábyrgð er sameiginleg.", m3: "Réttlæti er ekki forréttindi, það er jöfn meðferð.", m4: "Ekkert kyn er öðru æðra.", m5: "Ofbeldi, mismunun og hatur er hafnað óháð uppruna.", m6: "Verðleikar, heiðarleiki og frelsi eru grundvöllur samfélagslegrar þróunar.", footer_slogan: "Lög, verðleikar og einstaklingurinn.", support_text: "Þetta heimspekilega framtak er tæknilega stutt af NorthByte Norway Tec Ltd. (UK) og AAP Sweden, sem berjast fyrir stafrænu sjálfstæði, gagnafullveldi og skynsamlegum lögum."
+  },
+  de: {
+    badge: "Politische & Soziale Bewegung", hero_desc: "Eine politische und soziale Bewegung der neuen Generation, die Geschlechtervorherrschaft ablehnt und für rechtliche Gleichheit, Chancengleichheit, gegenseitige Verantwortung und individuelle Freiheit eintritt.", prin_title: "Grundprinzipien", p1_title: "Rechtliche Gleichheit", p2_title: "Gegenseitige Verantwortung", p3_title: "Meritokratie", p4_title: "Chancengleichheit", p5_title: "Universeller Schutz vor Gewalt", p6_title: "Gleichgewicht von Familie und Individuum", p7_title: "Rationaler Dialog", man_title: "Equalerkil Manifest", man_sub: "Für Zusammenarbeit, nicht Konflikt; für Gleichgewicht, nicht Vorherrschaft; für Gleichheit, nicht Diskriminierung.", m1: "Ein Mensch ist ein Individuum vor seinem Geschlecht.", m2: "Rechte sind universell, Verantwortung wird geteilt.", m3: "Gerechtigkeit ist kein Privileg, sondern Gleichbehandlung.", m4: "Kein Geschlecht ist dem anderen überlegen.", m5: "Gewalt, Diskriminierung und Hass werden ungeachtet ihrer Quelle abgelehnt.", m6: "Leistung, Ehrlichkeit und Freiheit sind das Fundament gesellschaftlicher Entwicklung.", footer_slogan: "Recht, Leistung und das Individuum.", support_text: "Diese philosophische Initiative wird technologisch von NorthByte Norway Tec Ltd. (UK) und AAP Sweden unterstützt, die für digitale Unabhängigkeit, Datensouveränität und rationales Recht eintreten."
+  },
+  fr: {
+    badge: "Mouvement Politique & Social", hero_desc: "Un mouvement politique et social de nouvelle génération qui rejette la suprématie de genre ; prônant l'égalité juridique, l'égalité des chances, la responsabilité mutuelle et la liberté individuelle pour tous.", prin_title: "Principes Fondamentaux", p1_title: "Égalité Juridique", p2_title: "Responsabilité Mutuelle", p3_title: "Méritocratie", p4_title: "Égalité des Chances", p5_title: "Protection Universelle contre la Violence", p6_title: "Équilibre entre Famille et Individu", p7_title: "Dialogue Rationnel", man_title: "Manifeste Equalerkil", man_sub: "Prôner la coopération, non le conflit ; l'équilibre, non la suprématie ; l'égalité, non la discrimination.", m1: "Un humain est un individu avant son genre.", m2: "Les droits sont universels, les responsabilités sont partagées.", m3: "La justice n'est pas un privilège, c'est un traitement égal.", m4: "Aucun genre n'est supérieur à un autre.", m5: "La violence, la discrimination et la haine sont rejetées quelle qu'en soit la source.", m6: "Le mérite, l'honnêteté et la liberté sont le fondement du développement social.", footer_slogan: "Loi, Mérite et Individu.", support_text: "Cette initiative philosophique est soutenue technologiquement par NorthByte Norway Tec Ltd. (UK) et AAP Sweden, qui défendent l'indépendance numérique, la souveraineté des données et le droit rationnel."
+  },
+  nl: {
+    badge: "Politieke & Sociale Beweging", hero_desc: "Een politieke en sociale beweging van de nieuwe generatie die gendersuprematie verwerpt; en pleit voor juridische gelijkheid, gelijke kansen, wederzijdse verantwoordelijkheid en individuele vrijheid voor iedereen.", prin_title: "Kernprincipes", p1_title: "Juridische Gelijkheid", p2_title: "Wederzijdse Verantwoordelijkheid", p3_title: "Meritocratie", p4_title: "Gelijke Kansen", p5_title: "Universele Bescherming tegen Geweld", p6_title: "Balans tussen Familie en Individu", p7_title: "Rationele Dialoog", man_title: "Equalerkil Manifest", man_sub: "Pleit voor samenwerking, niet voor conflict; voor balans, niet voor suprematie; voor gelijkheid, niet voor discriminatie.", m1: "Een mens is een individu vóór zijn gender.", m2: "Rechten zijn universeel, verantwoordelijkheden worden gedeeld.", m3: "Rechtvaardigheid is geen privilege, het is gelijke behandeling.", m4: "Geen enkel gender is superieur aan een ander.", m5: "Geweld, discriminatie en haat worden afgewezen ongeacht de bron.", m6: "Verdienste, eerlijkheid en vrijheid vormen de basis van sociale ontwikkeling.", footer_slogan: "Wet, Verdienste en het Individu.", support_text: "Dit filosofische initiatief wordt technologisch ondersteund door NorthByte Norway Tec Ltd. (UK) en AAP Sweden, die pleiten voor digitale onafhankelijkheid, datasoevereiniteit en rationeel recht."
+  },
+  es: {
+    badge: "Movimiento Político y Social", hero_desc: "Un movimiento político y social de nueva generación que rechaza la supremacía de género; abogando por la igualdad legal, la igualdad de oportunidades, la responsabilidad mutua y la libertad individual para todos.", prin_title: "Principios Fundamentales", p1_title: "Igualdad Legal", p2_title: "Responsabilidad Mutua", p3_title: "Meritocracia", p4_title: "Igualdad de Oportunidades", p5_title: "Protección Universal contra la Violencia", p6_title: "Equilibrio entre Familia e Individuo", p7_title: "Diálogo Racional", man_title: "Manifiesto Equalerkil", man_sub: "Abogar por la cooperación, no por el conflicto; por el equilibrio, no por la supremacía; por la igualdad, no por la discriminación.", m1: "Un ser humano es un individuo antes que su género.", m2: "Los derechos son universales, las responsabilidades son compartidas.", m3: "La justicia no es un privilegio, es un trato igualitario.", m4: "Ningún género es superior a otro.", m5: "La violencia, la discriminación y el odio se rechazan sin importar la fuente.", m6: "El mérito, la honestidad y la libertad son la base del desarrollo social.", footer_slogan: "Ley, Mérito y el Individuo.", support_text: "Esta iniciativa filosófica cuenta con el respaldo tecnológico de NorthByte Norway Tec Ltd. (UK) y AAP Sweden, que defienden la independencia digital, la soberanía de los datos y la ley racional."
+  },
+  pt: {
+    badge: "Movimento Político e Social", hero_desc: "Um movimento político e social de nova geração que rejeita a supremacia de gênero; defendendo a igualdade legal, igualdade de oportunidades, responsabilidade mútua e liberdade individual para todos.", prin_title: "Princípios Fundamentais", p1_title: "Igualdade Legal", p2_title: "Responsabilidade Mútua", p3_title: "Meritocracia", p4_title: "Igualdade de Oportunidades", p5_title: "Proteção Universal contra a Violência", p6_title: "Equilíbrio entre Família e Indivíduo", p7_title: "Diálogo Racional", man_title: "Manifesto Equalerkil", man_sub: "Defender a cooperação, não o conflito; o equilíbrio, não a supremacia; a igualdade, não a discriminação.", m1: "Um ser humano é um indivíduo antes de seu gênero.", m2: "Os direitos são universais, as responsabilidades são partilhadas.", m3: "A justiça não é um privilégio, é tratamento igual.", m4: "Nenhum gênero é superior a outro.", m5: "A violência, a discriminação e o ódio são rejeitados independentemente da origem.", m6: "O mérito, a honestidade e a liberdade são a base do desenvolvimento social.", footer_slogan: "Lei, Mérito e o Indivíduo.", support_text: "Esta iniciativa filosófica é apoiada tecnologicamente pela NorthByte Norway Tec Ltd. (UK) e AAP Sweden, que defendem a independência digital, a soberania de dados e a lei racional."
+  },
+  ru: {
+    badge: "Политическое и социальное движение", hero_desc: "Политическое и социальное движение нового поколения, отвергающее гендерное превосходство; выступающее за юридическое равенство, равные возможности, взаимную ответственность и свободу личности.", prin_title: "Основные принципы", p1_title: "Юридическое равенство", p2_title: "Взаимная ответственность", p3_title: "Меритократия", p4_title: "Равные возможности", p5_title: "Всеобщая защита от насилия", p6_title: "Баланс семьи и личности", p7_title: "Рациональный диалог", man_title: "Манифест Эквалеркил", man_sub: "Выступайте за сотрудничество, а не конфликт; за баланс, а не превосходство; за равенство, а не дискриминацию.", m1: "Человек — это прежде всего личность, а не пол.", m2: "Права универсальны, ответственность общая.", m3: "Справедливость — это не привилегия, это равное отношение.", m4: "Ни один пол не превосходит другой.", m5: "Насилие, дискриминация и ненависть отвергаются независимо от источника.", m6: "Заслуги, честность и свобода — основа социального развития.", footer_slogan: "Закон, Заслуги и Личность.", support_text: "Эта философская инициатива технологически поддерживается NorthByte Norway Tec Ltd. (UK) и AAP Sweden, выступающими за цифровую независимость, суверенитет данных и рациональное право."
+  },
+  ar: {
+    badge: "حركة سياسية واجتماعية", hero_desc: "حركة سياسية واجتماعية من الجيل الجديد ترفض التفوق الجنسي؛ وتدعو إلى المساواة القانونية، وتكافؤ الفرص، والمسؤولية المتباذلة، والحرية الفردية للجميع.", prin_title: "المبادئ الأساسية", p1_title: "المساواة القانونية", p2_title: "المسؤولية المتبادلة", p3_title: "الجدارة", p4_title: "تكافؤ الفرص", p5_title: "الحماية الشاملة ضد العنف", p6_title: "التوازن بين الأسرة والفرد", p7_title: "الحوار العقلاني", man_title: "بيان إيكواليركيل", man_sub: "ندعو إلى التعاون، لا الصراع؛ وإلى التوازن، لا التفوق؛ وإلى المساواة، لا التمييز.", m1: "الإنسان فرد قبل أن يكون جنساً.", m2: "الحقوق عالمية، والمسؤوليات مشتركة.", m3: "العدالة ليست امتيازاً، بل هي معاملة متساوية.", m4: "لا يوجد جنس يتفوق على الآخر.", m5: "يُرفض العنف والتمييز والكراهية بغض النظر عن المصدر.", m6: "الجدارة والصدق والحرية هي أساس التنمية الاجتماعية.", footer_slogan: "القانون والجدارة والفرد.", support_text: "تُدعم هذه المبادرة الفلسفية تقنياً من قبل NorthByte Norway Tec Ltd. (UK) و AAP Sweden، اللتين تدافعان عن الاستقلال الرقمي، وسيادة البيانات، والقانون العقلاني."
+  }
+};
+
+function changeLanguage(lang) {
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  
+  if (lang === 'ar') {
+    document.documentElement.setAttribute('dir', 'rtl');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+  }
+}
+
+window.onload = () => {
+  changeLanguage(document.getElementById('langSwitcher').value);
+}
+</script>
+</body>
+</html>
